@@ -9,8 +9,22 @@ const playAgainButton = document.querySelector(".play-again-button");
 
 const word = "magnolia";
 const guessedLettersElement = [];
+let remainingGuesses = 8;
 
-const placeholder =function (word) {
+const getWord = asnyc function () {
+   const response = await fetch("https//gist.githubusercontent.com/skillcrush-curriculum/7061f1d4d3d5bfe47efbfbcfe42bf57e/raw/5ffc447694486e7dea686f34a6c085ae371b43fe/words.txt");
+   const words = await response.text();
+   const wordArray = words.split("\n");
+   const randomIndex = Math.floor(Math.random() * wordArray.lemgth);
+   word = wordArray[randomIndex].trim();
+   placeholder(word);
+};
+
+
+getWord();
+
+
+const placeholder = function placeholder(word) {
     const placeholderLetters = [];
     for (const letter of word) {
         console.log(letter);
@@ -85,6 +99,25 @@ const updateWordInProgress = function (guessedLettersElement) {
     }
     wordInProgress.innerText = revealWord.join("");
     checkIfWin();
+};
+
+const updateGuessesRemaining =function (guess) {
+    const upperWord = word.toUpperCase();
+    if (!upperWord.includes(guess)) {
+        //oh no - bad guess, lose a chance
+        message.innerText = `Sorry the word has no $(guess).`;
+        remainingGuesses -= 1;
+    } else {
+        message.innerText = `Good guess! The word has the letter $(guess).`;
+    }
+
+    if (remainingGuesses === 0){
+        message.innerHTML = `Game over! The word was <span class="highlight">$(word)</span>.`;
+    } else if (remainingGuesses === 1) {
+        remainingGuessesDisplay.innerText = `${remainingGuesses} guess`;
+    } else {
+        remainingGuessesDisplay.innerText = `${remainingGuesses} guesses`;
+    }
 };
 
 const checkIfWin = function () {
