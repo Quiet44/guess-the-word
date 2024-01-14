@@ -1,6 +1,6 @@
 const guessedLetters = document.querySelector(".guessed-letters");
 const guessButton = document.querySelector(".guess");
-const textInput = document.querySelector(".letter");
+const letterInput = document.querySelector(".letter");
 const wordInProgress = document.querySelector(".word-in-progress");
 const remainingGuessesElement = document.querySelector(".element");
 const remainingGuessesDisplay = document.querySelector(".display");
@@ -15,7 +15,7 @@ const getWord = async function () {
    const response = await fetch("https://gist.githubusercontent.com/skillcrush-curriculum/7061f1d4d3d5bfe47efbfbcfe42bf57e/raw/5ffc447694486e7dea686f34a6c085ae371b43fe/words.txt");
    const words = await response.text();
    const wordArray = words.split("\n");
-   const randomIndex = Math.floor(Math.random() * wordArray.lemgth);
+   const randomIndex = Math.floor(Math.random() * wordArray.length);
    word = wordArray[randomIndex].trim();
    placeholder(word);
 };
@@ -37,9 +37,9 @@ guessButton.addEventListener("click", function (e) {
     // Empty message paragraph
     message.innerText = "";
     // Let's grab what was entered in the input
-    const guess = letterInput.value;
+    const guess = textInput.value;
     //Let's make sure that it is a single letter
-    const goodGuess = validateInpute(guess);
+    const goodGuess = validateInput(guess);
 
  if (goodGuess) {
     // We've got a letter! Let's guess!
@@ -67,20 +67,20 @@ const validateInput =function (input) {
 
 const makeGuess = function (guess) {
     guess = guess.toUpperCase();
-    if (guessedLetters.includes(guess)) {
+    if (guessedLettersElement.includes(guess)) {
         message.innerText = "You already guessed that letter, silly. Try again.";
     } else {
-        guessedLetters.push(guess);
-        console.log(guessedLetters);
+        guessedLettersElement.push(guess);
+        console.log(guessedLettersElement);
         updateGuessesRemaining(guess);
-        showGuessLetters();
-        updateWordInProgress(guessedLetters);
+        showGuessLettersElement();
+        updateWordInProgress(guessedLettersElement);
     }
 };
 
-const showGuessedLetters = function () {
+const showGuessedLettersElement = function () {
     //clear the list first
-    guessedLetters.innerHTML = "";
+    guessedLettersElement.innerHTML = "";
     for (const letter of guessedLettersElement) {
         const li = document.createElement("li");
         li.innerText = letter;
